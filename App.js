@@ -2,7 +2,7 @@ import 'react-native-gesture-handler'; // officel standart. hjælper mod crashe 
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// hent mine skærme 
+// hent mine skærme (Ole er sej)
 import LoginScreen from './screens/LoginScreen';
 import ProfileSetupScreen from './screens/ProfileSetupScreen';
 import SwipeScreen from './screens/SwipeScreen';
