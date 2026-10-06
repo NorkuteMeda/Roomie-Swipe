@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen';
 import ProfileSetupScreen from './screens/ProfileSetupScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import MatchesScreen from './screens/MatchesScreen';
+import firebaseConfig from './database/firebase';
 
 // Stack.Navigator holder styr på hvilken skærm brugeren er på og navigations-historikken.
 // initialRouteName="Login" betyder appen altid starter på login-skærmen.
