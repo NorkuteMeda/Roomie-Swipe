@@ -1,6 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Alert } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import ProfilePictureComponent from '../components/ProfilePictureComponent';
 
 import TextInputComponent from '../components/TextInputComponent';
 import ButtonComponent from '../components/ButtonComponent';
@@ -11,13 +14,7 @@ import { GlobalStyle } from '../styles/GlobalStyle';
 const INTERESTS = ['Sport', 'Gaming', 'Madlavning', 'Musik', 'Rejser'];
 
 // Skærm til at oprette/udfylde profil. Navigation-props kommer automatisk fra Stack.Screen i App.js.
-export default function ProfileSetupScreen({ navigation }) {
-
-  // firstName/age/bio er ikke brugt lige nu 
-  // og understøtter ikke længere value/onChangeText. 
-  // const [firstName, setFirstName] = useState("");
-  // const [age, setAge] = useState("");
-  // const [bio, setBio] = useState("");
+export default function ProfileSetupScreen({ navigation, route }) {
 
   // furnished holder styr på om "Ja" eller "Nej" er valgt (kun én værdi ad gangen, som en radio-knap)
   const [furnished, setFurnished] = useState(null);
@@ -33,8 +30,39 @@ export default function ProfileSetupScreen({ navigation }) {
       setSelectedInterests([...selectedInterests, interest]); // tilføj
     }
   }
+
+  const [profileImage, setProfileImage] = useState(null);
+
+  // Når kameraskærmen sender et billede tilbage, ligger det i route.params
+  useEffect(() => {
+    if (route.params?.photoUri) {
+      setProfileImage(route.params.photoUri);
+    }
+  }, [route.params?.photoUri]);
+
+  const pickFromGallery = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+    if (!result.canceled) {
+      setProfileImage(result.assets[0].uri);
+    }
+  };
+
+  const chooseSource = () => {
+    Alert.alert('Profilbillede', 'Hvordan vil du tilføje et billede?', [
+      { text: 'Tag billede', onPress: () => navigation.navigate('Camera') },
+      { text: 'Vælg fra galleri', onPress: pickFromGallery },
+      { text: 'Annuller', style: 'cancel' },
+    ]);
+  };
+
   return (
     <ScrollView contentContainerStyle={GlobalStyle.container}>
+    <ProfilePictureComponent size={150} imageUri={profileImage} onPress={chooseSource} />
 
       {/* value/onChangeText udkommenteret, da TextInputComponent ikke længere understøtter dem */}
       <TextInputComponent label="Fornavn" hint="Fornavn" /* value={firstName} onChangeText={setFirstName} */ />
