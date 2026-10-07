@@ -59,4 +59,5 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
 //PictureComponent
     picture: { borderWidth: 1, borderColor: 'lightgray' },
     placeholderPicture: { borderWidth: 1, borderColor: 'gray', borderStyle: 'dashed', backgroundColor: '#fff' }, //stiplede kant, skal skiftes ud med rigtige billeder 
+
 });

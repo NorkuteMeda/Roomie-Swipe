@@ -40,29 +40,30 @@ export default function CameraScreen({ navigation }) {
     }
   };
 
-  return (
+    return (
     <View style={styles.container}>
-      <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
+        <CameraView ref={cameraRef} style={styles.camera} facing={facing} />
+
+        {/* Knapperne ligger oven på kameraet, ikke inde i det */}
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.btn} onPress={toggleFacing}>
+        <TouchableOpacity style={styles.btn} onPress={toggleFacing}>
             <Ionicons name="camera-reverse-outline" size={32} color="#fff" />
-          </TouchableOpacity>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.snapBtn} onPress={snap}>
+        <TouchableOpacity style={styles.snapBtn} onPress={snap}>
             <Text style={styles.snapText}>{loading ? '...' : ''}</Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
 
-          {/* Tom plads, så knapperne er centreret */}
-          <View style={{ width: 56 }} />
+        {/* Tom plads, så knapperne er centreret */}
+        <View style={{ width: 56 }} />
         </View>
-      </CameraView>
     </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000' },
-  camera: { flex: 1, width: '100%', justifyContent: 'flex-end' },
+  camera: { flex: 1, width: '100%' },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
   permissionText: { marginBottom: 16, textAlign: 'center' },
   buttonRow: {
@@ -87,4 +88,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   snapText: { color: 'white', fontSize: 20 },
+
+  buttonRow: {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  padding: 24,
+  paddingBottom: 40,
+},
 });
