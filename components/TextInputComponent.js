@@ -2,7 +2,15 @@ import { Text, View, TextInput } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 
 // Genbrugelig komponent til et tekstfelt med en label ovenover
-export default function TextInputComponent({ label, hint, secureTextEntry, keyboardType, multiline }) {
+export default function TextInputComponent({
+  label,
+  hint,
+  secureTextEntry,
+  keyboardType,
+  multiline,
+  value,
+  onChangeText,
+}) {
   return (
     <View style={{ width: '100%' }}>
       <Text style={GlobalStyle.inpLabel}>{label}</Text>
@@ -12,6 +20,9 @@ export default function TextInputComponent({ label, hint, secureTextEntry, keybo
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         multiline={multiline}
+        value={value}
+        onChangeText={onChangeText}
+        autoCapitalize="none"
       />
     </View>
   );

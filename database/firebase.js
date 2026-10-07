@@ -1,6 +1,8 @@
 // database/firebase.js
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -22,3 +24,9 @@ export const rtdb = getDatabase(
   firebaseApp,
   "https://roomieswipe-94bae-default-rtdb.europe-west1.firebasedatabase.app/"
 );
+
+const app = initializeApp(firebaseConfig);
+
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
