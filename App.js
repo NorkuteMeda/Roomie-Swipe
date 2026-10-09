@@ -11,6 +11,7 @@ import ProfileSetupScreen from './screens/ProfileSetupScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import MatchesScreen from './screens/MatchesScreen';
 import CameraScreen from './screens/CameraScreen';
+import MapScreen from './screens/MapScreen';
 
 // Importerer auth fra firebase-filen (erstatter den gamle import "./database/firebase")
 import { auth } from './database/firebase';
@@ -41,6 +42,7 @@ export default function App() {
             <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} options={{ title: 'Opret profil' }} />
             <Stack.Screen name="Matches" component={MatchesScreen} options={{ title: 'Dine matches' }} />
             <Stack.Screen name="Camera" component={CameraScreen} options={{ title: 'Tag billede' }} />
+            <Stack.Screen name="Map" component={MapScreen} options={{ title: 'Kort' }} />
           </>
         ) : (
           <>

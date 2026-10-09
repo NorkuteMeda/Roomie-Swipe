@@ -29,6 +29,10 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
 //MatchesScreen en linje pr. match i listen (billede + navn) 
     liste: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: 'lightgray', width: '100%' },
 
+//MapScreen kortet fylder hele skærmen (ingen padding som i container)
+    mapContainer: { flex: 1 },
+    map: { flex: 1, width: '100%' },
+
 //ButtonComponent
     button_1: {
         pressedColor: '#993C1D', // pres knap fare 

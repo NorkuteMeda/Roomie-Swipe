@@ -35,6 +35,9 @@ export default function SwipeScreen({ navigation }) {
         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{current.FullName}, {current.Age}</Text>
         <Text style={{ color: 'gray', marginBottom: 8 }}>{current.Area} - {current.Furnished ? 'møbleret' : 'umøbleret'}</Text>
         <Text>{current.Bio}</Text>
+
+        {/* Åbner kortet, så man kan se hvor værelset ligger (viser kun København indtil videre) */}
+        <ButtonComponent title="Se på kort" type="secondary" onPress={() => navigation.navigate('Map')} />
       </View>
 
       {/* X og hjerte-knapperne - begge gør reelt det samme lige nu (går videre til næste profil), 
