@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
-import { Button, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Button, Text, TouchableOpacity, View } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import Ionicons from '@expo/vector-icons/Ionicons';
+
+import { GlobalStyle } from '../styles/GlobalStyle';
 
 export default function CameraScreen({ navigation }) {
   const [facing, setFacing] = useState('front');
@@ -9,14 +11,12 @@ export default function CameraScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const cameraRef = useRef(null);
 
-  // Tilladelsen hentes stadig
   if (!permission) return <View />;
 
-  // Brugeren har ikke givet tilladelse endnu
   if (!permission.granted) {
     return (
-      <View style={styles.center}>
-        <Text style={styles.permissionText}>Vi har brug for adgang til dit kamera</Text>
+      <View style={GlobalStyle.cameraCenter}>
+        <Text style={GlobalStyle.cameraPermissionText}>Vi har brug for adgang til dit kamera</Text>
         <Button onPress={requestPermission} title="Giv tilladelse" />
       </View>
     );
@@ -30,8 +30,7 @@ export default function CameraScreen({ navigation }) {
     if (!cameraRef.current || loading) return;
     try {
       setLoading(true);
-      const result = await cameraRef.current.takePictureAsync({ quality: 0.7 });
-      // Sender billedet tilbage til ProfileSetup og lukker kameraet
+      const result = await cameraRef.current.takePictureAsync({ quality: 0.2 });
       navigation.navigate('ProfileSetup', { photoUri: result.uri });
     } catch (err) {
       console.log('Snap error:', err);
@@ -40,64 +39,21 @@ export default function CameraScreen({ navigation }) {
     }
   };
 
-    return (
-    <View style={styles.container}>
-        <CameraView ref={cameraRef} style={styles.camera} facing={facing} />
+  return (
+    <View style={GlobalStyle.cameraContainer}>
+      <CameraView ref={cameraRef} style={GlobalStyle.camera} facing={facing} />
 
-        {/* Knapperne ligger oven på kameraet, ikke inde i det */}
-        <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.btn} onPress={toggleFacing}>
-            <Ionicons name="camera-reverse-outline" size={32} color="#fff" />
+      <View style={GlobalStyle.cameraButtonRow}>
+        <TouchableOpacity style={GlobalStyle.cameraFlipBtn} onPress={toggleFacing}>
+          <Ionicons name="camera-reverse-outline" size={32} color="#fff" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.snapBtn} onPress={snap}>
-            <Text style={styles.snapText}>{loading ? '...' : ''}</Text>
+        <TouchableOpacity style={GlobalStyle.cameraSnapBtn} onPress={snap}>
+          <Text style={GlobalStyle.cameraSnapText}>{loading ? '...' : ''}</Text>
         </TouchableOpacity>
 
-        {/* Tom plads, så knapperne er centreret */}
-        <View style={{ width: 56 }} />
-        </View>
+        <View style={GlobalStyle.cameraSpacer} />
+      </View>
     </View>
-    );
+  );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000' },
-  camera: { flex: 1, width: '100%' },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
-  permissionText: { marginBottom: 16, textAlign: 'center' },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    padding: 24,
-  },
-  btn: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    borderRadius: 28,
-    padding: 12,
-  },
-  snapBtn: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    height: 80,
-    width: 80,
-    borderRadius: 40,
-    borderWidth: 4,
-    borderColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  snapText: { color: 'white', fontSize: 20 },
-
-  buttonRow: {
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  flexDirection: 'row',
-  justifyContent: 'space-around',
-  alignItems: 'center',
-  padding: 24,
-  paddingBottom: 40,
-},
-});

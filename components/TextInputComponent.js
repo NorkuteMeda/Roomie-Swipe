@@ -12,7 +12,7 @@ export default function TextInputComponent({
   onChangeText,
 }) {
   return (
-    <View style={{ width: '100%' }}>
+    <View style={GlobalStyle.inputWrapper}>
       <Text style={GlobalStyle.inpLabel}>{label}</Text>
       <TextInput
         style={GlobalStyle.textInput}
