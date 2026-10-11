@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-import { signOut } from 'firebase/auth';
+
 
 import PictureComponent from '../components/PictureComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { Profiler } from '../data/profiler';
 import { GlobalStyle } from '../styles/GlobalStyle';
-import { auth } from '../database/firebase';
+
 
 
 export default function SwipeScreen({ navigation }) {
@@ -54,7 +54,7 @@ export default function SwipeScreen({ navigation }) {
 
       {/* NYT: knapper til profil og logud */}
       <ButtonComponent title="Min profil" type="secondary" onPress={() => navigation.navigate('ProfileSetup')} />
-      <ButtonComponent title="Log ud" type="secondary" onPress={() => signOut(auth)} />
+      
 
       <StatusBar style="auto" />
     </View>
