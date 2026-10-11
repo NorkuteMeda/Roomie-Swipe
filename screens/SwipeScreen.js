@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import PictureComponent from '../components/PictureComponent';
 import ButtonComponent from '../components/ButtonComponent';
-import { PROFILES } from '../data/const';
+import { Profiler } from '../data/profiler';
 import { GlobalStyle } from '../styles/GlobalStyle';
 
 
@@ -14,12 +14,12 @@ export default function SwipeScreen({ navigation }) {
 
   // index holder styr på hvilken profil i PROFILES-arrayet vi kigger på lige nu, starter ved 0
   const [index, setIndex] = useState(0);
-  const current = PROFILES[index];
+  const current = Profiler[index];
 
   // Rykker til næste profil i arrayet. Hvis vi er nået til den sidste profil, 
   // navigerer vi i stedet videre til Matches-skærmen
   const nextProfile = () => {
-    if (index < PROFILES.length - 1) {
+    if (index < Profiler.length - 1) {
       setIndex(index + 1);
     } else {
       navigation.navigate('Matches');

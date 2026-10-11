@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, FlatList } from 'react-native';
 
 import PictureComponent from '../components/PictureComponent';
-import { PROFILES } from '../data/const';
+import { Profiler } from '../data/profiler';
 import { GlobalStyle } from '../styles/GlobalStyle';
 
 // Viser en liste over alle profiler som "matches" ved hjælp af FlatList
@@ -13,7 +13,7 @@ export default function MatchesScreen() {
 
       <FlatList
         style={{ width: '100%' }}
-        data={PROFILES}              // arrayet der skal vises, ét kort pr. element
+        data={Profiler}              // arrayet der skal vises, ét kort pr. element
         keyExtractor={(item, index) => index.toString()} // unikt ID til hver linje som React bruger internt ( vi ved hvad bruger vi er nået til)
         renderItem={({ item }) => {  // kaldes én gang per profil i PROFILES
           return (
