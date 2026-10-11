@@ -13,9 +13,6 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase (Ved ikke om den her skal bruges?)
-// const app = initializeApp(firebaseConfig);
-
 // Init kun én gang
 export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 

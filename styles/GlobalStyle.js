@@ -40,28 +40,28 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
     mapContainer: { flex: 1 },
     map: { flex: 1, width: '100%' },
 
-//ButtonComponent
+    //ButtonComponent
     button_1: {
-        pressedColor: Farver.primærMørk, // farve når knappen trykkes
-        defaultColor: Farver.primær,     // normal farve
+        backgroundColor: '#D85A30', // orange baggrund (før defaultColor)
         padding: 12,
         borderRadius: 8,
         alignItems: 'center',
         marginTop: 8,
+        width: 200,
     },
     button_1_Text: { color: '#fff', fontWeight: 'bold' },
 
-    button2: { // opret profil knap 
-        pressedColor: '#f0f0f0', // pres knap farve 
-        defaultColor: '#fff', // default farve 
+    button2: { // opret profil knap
+        backgroundColor: '#fff', // hvid baggrund (før defaultColor)
         padding: 12,
         borderRadius: 8,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'gray',
         marginTop: 8,
+        width: 200,
     },
-            button2_Text: { color: '#333', fontWeight: 'bold' },
+    button2_Text: { color: '#333', fontWeight: 'bold' },
 
 //TextInputComponent
     inpLabel: { alignSelf: 'flex-start', marginBottom: 4 },
