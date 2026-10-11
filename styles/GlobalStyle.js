@@ -128,6 +128,19 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
   questionText: { fontWeight: '600', marginBottom: 6 },
   scaleLabels: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: -6, marginBottom: 8 },
   scaleLabelText: { color: 'gray', fontSize: 12 },
+  
+  //AiBioScreen -> chat med AI-profilhjælperen
+  chatContainer: { flex: 1, backgroundColor: '#fff', padding: 16 },
+  chatIntro: { color: 'gray', marginBottom: 8, textAlign: 'center' },
+  chatList: { paddingVertical: 8 },
+  bubbleAi: { alignSelf: 'flex-start', backgroundColor: Farver.primærLys, borderRadius: 16, padding: 12, marginBottom: 8, maxWidth: '85%' },
+  bubbleAiText: { color: '#333' },
+  bubbleUser: { alignSelf: 'flex-end', backgroundColor: Farver.primær, borderRadius: 16, padding: 12, marginBottom: 8, maxWidth: '85%' },
+  bubbleUserText: { color: '#fff' },
+  chatLoading: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
+  chatLoadingText: { color: 'gray', marginLeft: 8 },
+  chatInputRow: { flexDirection: 'row', alignItems: 'center' },
+  chatInput: { flex: 1, borderWidth: 1, borderColor: 'gray', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8, marginRight: 8, marginTop: 8, maxHeight: 100 },
 });
 
 // Profilbillede-cirklen afhænger af size, så den er en funktion i stedet for en fast style

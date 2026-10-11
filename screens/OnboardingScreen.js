@@ -73,8 +73,9 @@ export default function OnboardingScreen({ navigation }) {
     try {
       // update ændrer kun onboarding-feltet og lader navn, bio, billede osv. være i fred
       await update(ref(rtdb, 'users/' + auth.currentUser.uid), { onboarding: toSave });
-      // reset rydder historikken, så man ikke kan gå "tilbage" ind i spørgsmålene fra Swipe
-      navigation.reset({ index: 0, routes: [{ name: 'Swipe' }] });
+      
+            // Videre til AI-profilhjælperen, som skriver en bio ud fra svarene
+      navigation.navigate('AiBio');
     } catch (e) {
       Alert.alert(e?.message || 'Noget gik galt.');
     }
