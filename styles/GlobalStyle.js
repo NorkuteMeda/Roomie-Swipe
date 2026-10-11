@@ -1,5 +1,12 @@
 import { StyleSheet } from "react-native";
 
+// Fælles farver (mønster fra 05_firebase). Brug Farver.primær i stedet for at skrive hex-koden igen.
+export const Farver = {
+  primær: '#6B3FA0',     // RoomieMatch-lilla
+  primærLys: '#F1EAF9',  // lys lilla baggrund, fx valgte chips
+  primærMørk: '#4F2D78', // når en lilla knap trykkes ned
+};
+
 export const GlobalStyle = StyleSheet.create({ // al styling et sted 
 //Container - vores ydre indpakning AKA basis container for alle skærme 
     container: {
@@ -18,7 +25,7 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
     profilesetup: { alignSelf: 'flex-start', marginBottom: 4 },
     chipRow: { flexDirection: 'row', flexWrap: 'wrap', width: '100%', marginBottom: 12 },
     chip: { borderWidth: 1, borderRadius: 20, paddingVertical: 6, paddingHorizontal: 14, margin: 4 },
-    chipSelected: { borderColor: '#D85A30' },
+    chipSelected: { borderColor: Farver.primær, backgroundColor: Farver.primærLys },
     chipDefault: { borderColor: 'gray' },
 
  //SwipeScreen
@@ -35,8 +42,8 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
 
 //ButtonComponent
     button_1: {
-        pressedColor: '#993C1D', // pres knap fare 
-        defaultColor: '#D85A30', // default farve 
+        pressedColor: Farver.primærMørk, // farve når knappen trykkes
+        defaultColor: Farver.primær,     // normal farve
         padding: 12,
         borderRadius: 8,
         alignItems: 'center',
@@ -54,7 +61,7 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
         borderColor: 'gray',
         marginTop: 8,
     },
-    button2: { color: '#333', fontWeight: 'bold' },
+            button2_Text: { color: '#333', fontWeight: 'bold' },
 
 //TextInputComponent
     inpLabel: { alignSelf: 'flex-start', marginBottom: 4 },
@@ -111,6 +118,16 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
   //Til profilbillede i ProfilPictureComponent.js
   profilePictureImage: { width: '100%', height: '100%' },
   profilePicturePlaceholder: { color: 'gray', textAlign: 'center' },
+
+  //ScrollView-skærme (ProfileSetup, Onboarding) - flexGrow i stedet for flex: 1, ellers kan man ikke scrolle
+  scrollContainer: { flexGrow: 1, backgroundColor: '#fff', alignItems: 'center', padding: 20 },
+  onboardingIntro: { fontSize: 16, marginBottom: 20, textAlign: 'center' },
+
+  //QuestionComponent
+  questionBlock: { width: '100%', marginBottom: 8 },
+  questionText: { fontWeight: '600', marginBottom: 6 },
+  scaleLabels: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: -6, marginBottom: 8 },
+  scaleLabelText: { color: 'gray', fontSize: 12 },
 });
 
 // Profilbillede-cirklen afhænger af size, så den er en funktion i stedet for en fast style

@@ -26,7 +26,7 @@ export default function ButtonComponent({ title, onPress, type, width = 200 }) {
       onPress={onPress} // køres når brugeren spiller ikke er på knappen mere 
     >
       {/* Selve teksten inde i knappen, styling afhænger også af type */}
-      <Text style={type === 'primary' ? GlobalStyle.button_1_Text : GlobalStyle.button2}>{title}</Text>
+      <Text style={type === 'primary' ? GlobalStyle.button_1_Text : GlobalStyle.button2_Text}>{title}</Text>
     </Pressable>
   );
 }

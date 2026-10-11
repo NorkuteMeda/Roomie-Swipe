@@ -1,18 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { ref, set, get } from 'firebase/database';
+import { ref, update, get } from 'firebase/database';
+import { signOut } from 'firebase/auth';
 
 import ProfilePictureComponent from '../components/ProfilePictureComponent';
 import TextInputComponent from '../components/TextInputComponent';
+import QuestionComponent from '../components/QuestionComponent';
 import ButtonComponent from '../components/ButtonComponent';
 
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { auth, rtdb } from '../database/firebase';
-
-// interesser brugeren kan vælge mellem, hardcodet for nu
-const INTERESTS = ['Sport', 'Gaming', 'Madlavning', 'Musik', 'Rejser'];
 
 // Gør en billedfil om til en tekststreng, som kan gemmes i databasen
 const uriToBase64 = async (uri) => {
@@ -34,22 +33,12 @@ export default function ProfileSetupScreen({ navigation, route }) {
   const [age, setAge] = useState('');
   const [bio, setBio] = useState('');
 
-  // furnished holder styr på om "Ja" eller "Nej" er valgt (kun én værdi ad gangen, som en radio-knap)
-  const [furnished, setFurnished] = useState(null);
-
-  // selectedInterests er et array, da man kan vælge FLERE interesser samtidig
-  const [selectedInterests, setSelectedInterests] = useState([]);
+  // Grundlæggende valg - kun én værdi ad gangen, som en radio-knap.
+  // rolle bestemmer også hvilke spørgsmål der vises i onboarding.
+  const [koen, setKoen] = useState(null);
+  const [rolle, setRolle] = useState(null);
 
   const [profileImage, setProfileImage] = useState(null);
-
-  // Tilføjer eller fjerner en interesse fra det valgte array, afhængig af om den allerede er valgt
-  const toggleInterest = (interest) => {
-    if (selectedInterests.includes(interest)) {
-      setSelectedInterests(selectedInterests.filter((i) => i !== interest)); // fjern
-    } else {
-      setSelectedInterests([...selectedInterests, interest]); // tilføj
-    }
-  };
 
   // Henter den gemte profil fra databasen, når skærmen åbnes
   useEffect(() => {
@@ -61,8 +50,8 @@ export default function ProfileSetupScreen({ navigation, route }) {
           setFirstName(data.firstName || '');
           setAge(data.age || '');
           setBio(data.bio || '');
-          setFurnished(data.furnished || null);
-          setSelectedInterests(data.interests || []); // Firebase gemmer ikke tomme arrays
+          setKoen(data.koen || null);
+          setRolle(data.rolle || null);
           if (data.image) setProfileImage(data.image);
         }
       } catch (error) {
@@ -99,8 +88,14 @@ export default function ProfileSetupScreen({ navigation, route }) {
     ]);
   };
 
-  // Gemmer profilen under users/<uid> og går videre til Swipe
+  // Gemmer profilen under users/<uid> og går videre til onboarding
   const saveProfile = async () => {
+    // Køn og rolle skal vælges, fordi onboarding og matching bygger på dem
+    if (!koen || !rolle) {
+      Alert.alert('Du mangler at svare', 'Vælg dit køn, og om du er lejer eller udlejer.');
+      return;
+    }
+
     try {
       const uid = auth.currentUser.uid;
 
@@ -110,58 +105,44 @@ export default function ProfileSetupScreen({ navigation, route }) {
         image = profileImage.startsWith('data:') ? profileImage : await uriToBase64(profileImage);
       }
 
-      await set(ref(rtdb, 'users/' + uid), {
+      await update(ref(rtdb, 'users/' + uid), {
         firstName,
         age,
         bio,
-        furnished,
-        interests: selectedInterests,
+        koen,
+        rolle,
         image,
       });
-      navigation.navigate('Swipe');
+      navigation.navigate('Onboarding');
+    } catch (error) {
+      Alert.alert('Fejl', error.message);
+    }
+  };
+
+  // Logger brugeren ud. App.js opdager det via onAuthStateChanged og viser Login (mønster fra 06)
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
     } catch (error) {
       Alert.alert('Fejl', error.message);
     }
   };
 
   return (
-    <ScrollView contentContainerStyle={GlobalStyle.container}>
+    <ScrollView contentContainerStyle={GlobalStyle.scrollContainer}>
       <ProfilePictureComponent size={150} imageUri={profileImage} onPress={chooseSource} />
 
       <TextInputComponent label="Fornavn" hint="Fornavn" value={firstName} onChangeText={setFirstName} />
       <TextInputComponent label="Alder" hint="Alder" keyboardType="numeric" value={age} onChangeText={setAge} />
       <TextInputComponent label="Bio" hint="Skriv lidt om dig selv" multiline={true} value={bio} onChangeText={setBio} />
 
-      {/* Interesse-chips - genererer en knap per element i INTERESTS med .map() */}
-      <Text style={GlobalStyle.profilesetup}>Interesser</Text>
-      <View style={GlobalStyle.chipRow}>
-        {INTERESTS.map((interest, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => toggleInterest(interest)}
-            style={[GlobalStyle.chip, selectedInterests.includes(interest) ? GlobalStyle.chipSelected : GlobalStyle.chipDefault]}
-          >
-            <Text>{interest}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      {/* Køn og rolle - genbruger QuestionComponent, så chips ser ens ud i hele appen */}
+      <QuestionComponent question="Hvad er dit køn?" options={['Kvinde', 'Mand', 'Andet']} selected={koen} onSelect={setKoen} />
+      <QuestionComponent question="Er du lejer eller udlejer?" options={['Lejer', 'Udlejer']} selected={rolle} onSelect={setRolle} />
 
-      {/* Møbleret ja/nej - samme styling som interesser, men kun et valg muligt */}
-      <Text style={GlobalStyle.profilesetup}>Møbleret værelse?</Text>
-      <View style={GlobalStyle.chipRow}>
-        {['Ja', 'Nej'].map((option, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => setFurnished(option)}
-            style={[GlobalStyle.chip, furnished === option ? GlobalStyle.chipSelected : GlobalStyle.chipDefault]}
-          >
-            <Text>{option}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Gemmer profilen og navigerer videre til Swipe-skærmen */}
+      {/* Gemmer profilen og går videre til onboarding-spørgsmålene */}
       <ButtonComponent title="Gem og fortsæt" type="primary" width="100%" onPress={saveProfile} />
+      <ButtonComponent title="Log ud" type="secondary" width="100%" onPress={handleLogout} />
 
       <StatusBar style="auto" />
     </ScrollView>
