@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, get } from 'firebase/database';
 
@@ -16,14 +18,46 @@ import CameraScreen from './screens/CameraScreen';
 import MapScreen from './screens/MapScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
 import AiBioScreen from './screens/AiBioScreen';
+import ProfileMenuScreen from './screens/ProfileMenuScreen';
+import BioScreen from './screens/BioScreen';
 
 // Importerer auth og database fra firebase-filen
 import { auth, rtdb } from './database/firebase';
-import { GlobalStyle } from './styles/GlobalStyle';
+import { GlobalStyle, Farver } from './styles/GlobalStyle';
 
-// Stack.Navigator holder styr på hvilken skærm brugeren er på og navigations-historikken.
-// Hvilke skærme der findes afhænger af, om brugeren er logget ind (se user nedenfor).
+// Stack.Navigator holder styr på skærme, man går ind og ud af (profil, onboarding, kamera osv.).
+// Tab.Navigator er menuen i bunden af appen (mønster fra 02_navigation og 04_Styling).
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+// Menuen i bunden: Find roomie, Matches og Profil.
+// Ligger uden for App, så den ikke bliver lavet forfra hver gang App tegnes igen.
+function MainTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: Farver.primær,
+        tabBarInactiveTintColor: 'gray',
+        // Fyldt ikon når fanen er valgt, omrids når den ikke er (som i 04_Styling)
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Swipe') {
+            iconName = focused ? 'search' : 'search-outline';
+          } else if (route.name === 'Matches') {
+            iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+          } else {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen name="Swipe" component={SwipeScreen} options={{ title: 'Find roomie' }} />
+      <Tab.Screen name="Matches" component={MatchesScreen} options={{ title: 'Matches' }} />
+      <Tab.Screen name="Profil" component={ProfileMenuScreen} options={{ title: 'Profil' }} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   // user er null, når ingen er logget ind
@@ -62,15 +96,15 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {/* initialRouteName bestemmer startskærmen: ny bruger -> profil, eksisterende -> swipe */}
-      <Stack.Navigator initialRouteName={user ? (profileDone ? 'Swipe' : 'ProfileSetup') : 'Login'}>
+      {/* initialRouteName bestemmer startskærmen: ny bruger -> profil, eksisterende -> menuen med Find roomie */}
+      <Stack.Navigator initialRouteName={user ? (profileDone ? 'Main' : 'ProfileSetup') : 'Login'}>
         {user ? (
           <>
-            <Stack.Screen name="Swipe" component={SwipeScreen} options={{ title: 'Find en roomie' }} />
+            <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
             <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} options={{ title: 'Min profil' }} />
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ title: 'Om dig som roomie' }} />
-                        <Stack.Screen name="AiBio" component={AiBioScreen} options={{ title: 'Din bio' }} />
-            <Stack.Screen name="Matches" component={MatchesScreen} options={{ title: 'Dine matches' }} />
+            <Stack.Screen name="AiBio" component={AiBioScreen} options={{ title: 'Skriv bio med AI' }} />
+            <Stack.Screen name="Bio" component={BioScreen} options={{ title: 'Min bio' }} />
             <Stack.Screen name="Camera" component={CameraScreen} options={{ title: 'Tag billede' }} />
             <Stack.Screen name="Map" component={MapScreen} options={{ title: 'Kort' }} />
           </>

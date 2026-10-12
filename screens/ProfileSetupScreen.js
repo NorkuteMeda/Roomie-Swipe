@@ -27,11 +27,13 @@ const uriToBase64 = async (uri) => {
 
 // Skærm til at oprette/udfylde profil. Navigation-props kommer automatisk fra Stack.Screen i App.js.
 export default function ProfileSetupScreen({ navigation, route }) {
+  // fraMenu = true, når skærmen er åbnet fra Profil-menuen. Så går "Gem" tilbage i stedet for videre til onboarding.
+  // Gemmes i state, så den huskes selvom kameraet sender nye params (photoUri) tilbage.
+  const [fraMenu] = useState(route.params?.fraMenu === true);
 
-  // Tekstfelter
+  // Tekstfelter. Bio skrives ikke her, men med AI-profilhjælperen eller under "Min bio".
   const [firstName, setFirstName] = useState('');
   const [age, setAge] = useState('');
-  const [bio, setBio] = useState('');
 
   // Grundlæggende valg - kun én værdi ad gangen, som en radio-knap.
   // rolle bestemmer også hvilke spørgsmål der vises i onboarding.
@@ -49,7 +51,6 @@ export default function ProfileSetupScreen({ navigation, route }) {
           const data = snapshot.val();
           setFirstName(data.firstName || '');
           setAge(data.age || '');
-          setBio(data.bio || '');
           setKoen(data.koen || null);
           setRolle(data.rolle || null);
           if (data.image) setProfileImage(data.image);
@@ -88,7 +89,7 @@ export default function ProfileSetupScreen({ navigation, route }) {
     ]);
   };
 
-  // Gemmer profilen under users/<uid> og går videre til onboarding
+  // Gemmer profilen under users/<uid> og går videre til onboarding (eller tilbage til menuen)
   const saveProfile = async () => {
     // Køn og rolle skal vælges, fordi onboarding og matching bygger på dem
     if (!koen || !rolle) {
@@ -105,15 +106,19 @@ export default function ProfileSetupScreen({ navigation, route }) {
         image = profileImage.startsWith('data:') ? profileImage : await uriToBase64(profileImage);
       }
 
+      // bio er bevidst ikke med her, så den bio AI'en har skrevet ikke bliver overskrevet
       await update(ref(rtdb, 'users/' + uid), {
         firstName,
         age,
-        bio,
         koen,
         rolle,
         image,
       });
-      navigation.navigate('Onboarding');
+      if (fraMenu) {
+        navigation.goBack();
+      } else {
+        navigation.navigate('Onboarding');
+      }
     } catch (error) {
       Alert.alert('Fejl', error.message);
     }
@@ -134,15 +139,16 @@ export default function ProfileSetupScreen({ navigation, route }) {
 
       <TextInputComponent label="Fornavn" hint="Fornavn" value={firstName} onChangeText={setFirstName} />
       <TextInputComponent label="Alder" hint="Alder" keyboardType="numeric" value={age} onChangeText={setAge} />
-      <TextInputComponent label="Bio" hint="Skriv lidt om dig selv" multiline={true} value={bio} onChangeText={setBio} />
 
       {/* Køn og rolle - genbruger QuestionComponent, så chips ser ens ud i hele appen */}
       <QuestionComponent question="Hvad er dit køn?" options={['Kvinde', 'Mand', 'Andet']} selected={koen} onSelect={setKoen} />
       <QuestionComponent question="Er du lejer eller udlejer?" options={['Lejer', 'Udlejer']} selected={rolle} onSelect={setRolle} />
 
-      {/* Gemmer profilen og går videre til onboarding-spørgsmålene */}
-      <ButtonComponent title="Gem og fortsæt" type="primary" width="100%" onPress={saveProfile} />
-      <ButtonComponent title="Log ud" type="secondary" width="100%" onPress={handleLogout} />
+      {/* Gemmer profilen. Første gang går den videre til onboarding, fra menuen går den tilbage */}
+      <ButtonComponent title={fraMenu ? 'Gem' : 'Gem og fortsæt'} type="primary" width="100%" onPress={saveProfile} />
+
+      {/* Log ud vises kun under oprettelsen - ellers ligger den i Profil-menuen */}
+      {!fraMenu && <ButtonComponent title="Log ud" type="secondary" width="100%" onPress={handleLogout} />}
 
       <StatusBar style="auto" />
     </ScrollView>

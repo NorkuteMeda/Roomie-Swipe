@@ -52,9 +52,7 @@ export default function SwipeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* NYT: knapper til profil og logud */}
-      <ButtonComponent title="Min profil" type="secondary" onPress={() => navigation.navigate('ProfileSetup')} />
-      
+      {/* Profil og log ud ligger nu i Profil-fanen i menuen i bunden */}
 
       <StatusBar style="auto" />
     </View>

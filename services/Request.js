@@ -12,7 +12,7 @@ export default async function SendMessage(messageArray) {
       Authorization: 'Bearer ' + OPENAI_API_KEY,
     },
     body: JSON.stringify({
-      model: 'gpt-5-mini', // model type -> simpel model for nu
+      model: 'gpt-5-mini', // model type -> simpel model for 
       messages: messageArray,
     }),
   });
@@ -20,7 +20,7 @@ export default async function SendMessage(messageArray) {
   const data = await response.json();
 
   // Svarer OpenAI med en fejl (fx forkert nøgle eller ingen penge på kontoen),
-  // kastes den videre, så skærmen kan vise den i en Alert 
+  // kastes den videre, så skærmen kan vise den i en Alert
   if (!response.ok) {
     throw new Error(data?.error?.message || 'AI-tjenesten svarede ikke.');
   }

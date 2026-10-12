@@ -40,26 +40,26 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
     mapContainer: { flex: 1 },
     map: { flex: 1, width: '100%' },
 
-    //ButtonComponent
+//ButtonComponent - pressedColor/defaultColor læses af ButtonComponent (mønster fra 04_Styling)
     button_1: {
-        backgroundColor: '#D85A30', // orange baggrund (før defaultColor)
+        pressedColor: Farver.primærMørk, // farve når knappen trykkes
+        defaultColor: Farver.primær,     // normal farve
         padding: 12,
         borderRadius: 8,
         alignItems: 'center',
         marginTop: 8,
-        width: 200,
     },
     button_1_Text: { color: '#fff', fontWeight: 'bold' },
 
-    button2: { // opret profil knap
-        backgroundColor: '#fff', // hvid baggrund (før defaultColor)
+    button2: {
+        pressedColor: '#f0f0f0', // farve når knappen trykkes
+        defaultColor: '#fff',    // normal farve
         padding: 12,
         borderRadius: 8,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'gray',
         marginTop: 8,
-        width: 200,
     },
     button2_Text: { color: '#333', fontWeight: 'bold' },
 
@@ -141,6 +141,22 @@ export const GlobalStyle = StyleSheet.create({ // al styling et sted
   chatLoadingText: { color: 'gray', marginLeft: 8 },
   chatInputRow: { flexDirection: 'row', alignItems: 'center' },
   chatInput: { flex: 1, borderWidth: 1, borderColor: 'gray', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8, marginRight: 8, marginTop: 8, maxHeight: 100 },
+  
+  //SliderQuestionComponent
+  sliderValue: { fontSize: 16, fontWeight: 'bold', color: Farver.primær, marginBottom: 4 },
+  slider: { width: '100%', height: 40, marginBottom: 8 },
+
+  //BioScreen - stort tekstfelt til bioen
+  bioInput: { width: '100%', minHeight: 160, borderWidth: 1, borderColor: 'gray', borderRadius: 8, padding: 10, textAlignVertical: 'top', fontSize: 15 },
+  bioCounter: { alignSelf: 'flex-end', color: 'gray', fontSize: 12, marginTop: 4, marginBottom: 8 },
+
+  //ProfileMenuScreen - Profil-fanen
+  menuContainer: { flex: 1, backgroundColor: '#fff', alignItems: 'center', padding: 20 },
+  menuName: { fontSize: 20, fontWeight: 'bold' },
+  menuRole: { color: 'gray', marginBottom: 20 },
+  menuItem: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#eee' },
+  menuItemLeft: { flexDirection: 'row', alignItems: 'center' },
+  menuItemText: { fontSize: 16, marginLeft: 12 },
 });
 
 // Profilbillede-cirklen afhænger af size, så den er en funktion i stedet for en fast style

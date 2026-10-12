@@ -29,10 +29,13 @@ const formatAnswers = (data) => {
 
   const answers = data.onboarding || {};
   ONBOARDING_QUESTIONS.forEach((q) => {
+    // Spring spørgsmål over, der hører til den anden rolle (lejer og udlejer deler nogle keys)
+    if (q.forRolle && q.forRolle !== data.rolle) return;
     const value = answers[q.key];
     if (value === undefined || value === '') return;
     if (Array.isArray(value)) lines.push(q.question + ': ' + value.join(', '));
     else if (q.type === 'skala') lines.push(q.question + ': ' + value + ' ud af 5');
+    else if (q.type === 'slider') lines.push(q.question + ': ' + value + ' ' + q.unit);
     else lines.push(q.question + ': ' + value);
   });
 
@@ -40,7 +43,11 @@ const formatAnswers = (data) => {
 };
 
 // AI-profilhjælper: skriver et udkast til brugerens bio ud fra onboarding, og brugeren kan bede om rettelser.
-export default function AiBioScreen({ navigation }) {
+export default function AiBioScreen({ navigation, route }) {
+  // fraBio = true, når skærmen er åbnet fra "Min bio". Så går "Brug som min bio" tilbage dertil,
+  // hvor brugeren selv kan rette teksten, i stedet for at fortsætte til appen.
+  const fraBio = route.params?.fraBio === true;
+
   // messages er det, brugeren ser i chatten: { id, role: 'user' eller 'assistant', content }
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -79,7 +86,9 @@ export default function AiBioScreen({ navigation }) {
       try {
         const snapshot = await get(ref(rtdb, 'users/' + auth.currentUser.uid));
         const data = snapshot.exists() ? snapshot.val() : {};
-        await askAI('Her er mine svar. Skriv et udkast til min bio:\n' + formatAnswers(data), false);
+        // Har brugeren allerede en bio, får AI'en den med, så den kan bygge videre på den
+        const nuvaerende = data.bio ? '\nMin nuværende bio: ' + data.bio : '';
+        await askAI('Her er mine svar. Skriv et udkast til min bio:\n' + formatAnswers(data) + nuvaerende, false);
       } catch (e) {
         Alert.alert(e?.message || 'Kunne ikke hente din profil.');
         setLoading(false);
@@ -103,14 +112,20 @@ export default function AiBioScreen({ navigation }) {
     if (!latestBio || loading) return;
     try {
       await update(ref(rtdb, 'users/' + auth.currentUser.uid), { bio: latestBio });
-      navigation.reset({ index: 0, routes: [{ name: 'Swipe' }] });
+      if (fraBio) {
+        // Tilbage til "Min bio", som selv henter den nye tekst fra Firebase
+        navigation.goBack();
+      } else {
+        // Første gang: ind i appen. reset rydder historikken, så man ikke kan gå tilbage til oprettelsen.
+        navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
+      }
     } catch (e) {
       Alert.alert(e?.message || 'Noget gik galt.');
     }
   };
 
   const skip = () => {
-    navigation.reset({ index: 0, routes: [{ name: 'Swipe' }] });
+    navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
   };
 
   return (
@@ -157,7 +172,8 @@ export default function AiBioScreen({ navigation }) {
       </View>
 
       <ButtonComponent title="Brug som min bio" type="primary" width="100%" onPress={saveBio} />
-      <ButtonComponent title="Spring over" type="secondary" width="100%" onPress={skip} />
+      {/* Spring over giver kun mening under oprettelsen - fra "Min bio" bruger man bare tilbage-pilen */}
+      {!fraBio && <ButtonComponent title="Spring over" type="secondary" width="100%" onPress={skip} />}
 
       <StatusBar style="auto" />
     </KeyboardAvoidingView>
