@@ -15,6 +15,7 @@ import MatchesScreen from './screens/MatchesScreen';
 import CameraScreen from './screens/CameraScreen';
 import MapScreen from './screens/MapScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
+import AiBioScreen from './screens/AiBioScreen';
 
 // Importerer auth og database fra firebase-filen
 import { auth, rtdb } from './database/firebase';
@@ -68,6 +69,7 @@ export default function App() {
             <Stack.Screen name="Swipe" component={SwipeScreen} options={{ title: 'Find en roomie' }} />
             <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} options={{ title: 'Min profil' }} />
             <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ title: 'Om dig som roomie' }} />
+                        <Stack.Screen name="AiBio" component={AiBioScreen} options={{ title: 'Din bio' }} />
             <Stack.Screen name="Matches" component={MatchesScreen} options={{ title: 'Dine matches' }} />
             <Stack.Screen name="Camera" component={CameraScreen} options={{ title: 'Tag billede' }} />
             <Stack.Screen name="Map" component={MapScreen} options={{ title: 'Kort' }} />
