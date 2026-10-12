@@ -1,3 +1,4 @@
+
 import { TouchableOpacity, Text } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 
