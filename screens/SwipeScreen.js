@@ -4,7 +4,11 @@ import { useState } from 'react';
 
 
 import PictureComponent from '../components/PictureComponent';
+
 import ButtonComponent from '../components/ButtonComponent';
+import { signOut } from 'firebase/auth';
+import { auth } from '../database/firebase';
+
 import { Profiler } from '../data/profiler';
 import { GlobalStyle } from '../styles/GlobalStyle';
 
@@ -52,7 +56,9 @@ export default function SwipeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* Profil og log ud ligger nu i Profil-fanen i menuen i bunden */}
+      {/* NYT: knapper til profil og logud */}
+      <ButtonComponent title="Min profil" type="secondary" onPress={() => navigation.navigate('ProfileSetup')} />
+      
 
       <StatusBar style="auto" />
     </View>
