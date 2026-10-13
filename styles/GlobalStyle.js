@@ -163,3 +163,24 @@ export const profilePictureCircle = (size) => ({
   alignSelf: 'center',
   marginBottom: 16,
 });
+
+// Hele cirklen i PictureComponent: størrelse, form, stiplet kant og baggrund.
+// Størrelsen afhænger af size, så det er en funktion
+export const pictureCircle = (size) => ({
+  width: size,
+  height: size,
+  borderRadius: size / 2,
+  alignItems: 'center',
+  justifyContent: 'center',
+  // Herunder: flyttet fra placeholderPicture. Brug dine egne værdier
+  borderWidth: 1,
+  borderStyle: 'dashed',
+  borderColor: 'gray',
+  backgroundColor: '#fff',
+});
+
+// Teksten "foto" i cirklen. Skriftstørrelsen afhænger af size
+export const pictureText = (size) => ({
+  color: 'gray',
+  fontSize: size / 5,
+});
