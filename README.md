@@ -19,7 +19,7 @@ npm install
 - Swipe
 - Matches
 
-## Nye skærme lavet i G2
+## Nye skærme og funktioner lavet i G2
 
 ## Demo 
 - For at se videoen skal du trykke på "View raw" og derefter downloade videoen.
