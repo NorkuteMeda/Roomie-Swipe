@@ -13,15 +13,19 @@ npm install
 ```
 4. Scan QR-koden med Expo Go 
 
-## Skærme
+## Skærme fra G1
 - Login
 - Opret profil
 - Swipe
 - Matches
 
+## Nye skærme lavet i G2
+
 ## Demo 
 - For at se videoen skal du trykke på "View raw" og derefter downloade videoen.
 https://github.com/NorkuteMeda/Roomie-Swipe/blob/main/1f6b096b-83c6-475d-8bfa-65786794d449.mp4
+
+
 
 
 
