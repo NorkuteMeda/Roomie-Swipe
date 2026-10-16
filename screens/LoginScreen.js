@@ -23,7 +23,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={GlobalStyle.container}>
-      <Text style={GlobalStyle.login}>roomie</Text>
+      <Text style={GlobalStyle.login}>RoomieSwipe</Text>
 
       <TextInputComponent label="Email" hint="email@student.cbs.dk" value={email} onChangeText={setEmail} />
       <TextInputComponent label="Adgangskode" hint="adgangskode" secureTextEntry={true} value={password} onChangeText={setPassword} />
