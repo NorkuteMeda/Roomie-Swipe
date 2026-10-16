@@ -188,10 +188,6 @@ export const profilePictureCircle = (size) => ({
   marginBottom: 16,
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1f1e4da27172dd8bcdd3580526128cd676c24e73
 // Hele cirklen i PictureComponent: størrelse, form, stiplet kant og baggrund.
 // Størrelsen afhænger af size, så det er en funktion
 export const pictureCircle = (size) => ({
@@ -200,10 +196,6 @@ export const pictureCircle = (size) => ({
   borderRadius: size / 2,
   alignItems: 'center',
   justifyContent: 'center',
-<<<<<<< HEAD
-=======
-  // Herunder: flyttet fra placeholderPicture. Brug dine egne værdier
->>>>>>> 1f1e4da27172dd8bcdd3580526128cd676c24e73
   borderWidth: 1,
   borderStyle: 'dashed',
   borderColor: 'gray',

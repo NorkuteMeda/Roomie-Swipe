@@ -9,15 +9,9 @@ import { GlobalStyle } from '../styles/GlobalStyle';
 // Her laver vi vores genbrugelige knap, og sender den med, hvis nogle kalder den
 // Når en ny knap bliver lavet, så kalder man bare "ButtonComponent" sammen med følgende:
 // Den title (tekst) man gerne vil have på knappen
-<<<<<<< HEAD
 // "onPress" hvad der skal ske når en bruger trykker på knappen
 // type, som vi forklarer længere nede
 // width (valgfri), fx "100%" på formularer. Uden width bliver knappen 200 bred
-=======
-// "onPress" hvad der skal se når en bruger trykker på knappen
-// Samt type, som vi forklarer længere nede
-// width = bredden, fx "100%" på formularer. Uden width bliver knappen 200 bred.
->>>>>>> 1f1e4da27172dd8bcdd3580526128cd676c24e73
 export default function ButtonComponent({ title, onPress, type, width = 200 }) {
   // Vi opretter 2 variable, som bruges i if/else sætningen nedenunder
   let buttonStyle;
@@ -38,7 +32,6 @@ export default function ButtonComponent({ title, onPress, type, width = 200 }) {
   //- sammen med den tekst brugeren gerne vil have på knappen
   //- og det de gerne vil have til at ske når man trykker på den
   return (
-<<<<<<< HEAD
     // Pressable er en React Native komponent, man kan trykke på. Den ved om den bliver trykket ned lige nu (pressed),
     // så baggrundsfarven kan skifte imens (mønster fra 04_Styling)
     <Pressable
@@ -50,11 +43,5 @@ export default function ButtonComponent({ title, onPress, type, width = 200 }) {
     >
       <Text style={textStyle}>{title}</Text>
     </Pressable>
-=======
-    //I returen bruger vi "TouchableOpacity", det er bare en React Native komponent, som gør det muligt at lave noget som kan trykkes på
-    <TouchableOpacity style={[buttonStyle, { width: width }]} onPress={onPress}>
-      <Text style={textStyle}>{title}</Text>
-    </TouchableOpacity>
->>>>>>> 1f1e4da27172dd8bcdd3580526128cd676c24e73
   );
 }

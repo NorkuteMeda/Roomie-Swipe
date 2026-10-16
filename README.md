@@ -19,7 +19,23 @@ npm install
 - Swipe
 - Matches
 
-## Nye skærme og funktioner lavet i G2
+## Nye skærme i G2
+- SignUpScreen: Emil 
+- CameraScreen: Emil 
+- MapScreen: Nikola 
+- OnboardingScreen Ny: Meda 
+- AiBioScreen: Meda 
+- ProfileMenuScreen: ?
+- BioScreen: ? 
+
+## Funktionaliteter
+- Login og database: oprettelse, login og profiler gemt i Firebase 
+- Kamera: tag eller vælg profilbillede 
+- Kort: viser bydelen, værelset ligger i 
+- AI-profilhjælper: AI skriver din bio 
+- Profil-menu: rediger profil, svar og bio 
+- Menu i bunden: Find roomie, Matches og Profil 
+
 
 ## Demo 
 - For at se videoen skal du trykke på "View raw" og derefter downloade videoen.
