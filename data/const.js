@@ -5,6 +5,18 @@ export const INTERESTS = ['Sport', 'Gaming', 'Madlavning', 'Musik', 'Rejser'];
 // Bydele i København til område-spørgsmålene
 export const OMRAADER = ['Nørrebro', 'Vesterbro', 'Østerbro', 'Frederiksberg', 'Amager', 'Indre By', 'Valby', 'Andet'];
 
+// Omtrentligt centrum af hver bydel, så kortet kan vise hvor værelset ligger (vi har ikke præcise adresser endnu).
+// Navnene skal være de samme som i OMRAADER. 'Andet' har ingen koordinater, så kortet viser bare København.
+export const OMRAADE_KOORDINATER = {
+  'Nørrebro': { latitude: 55.6950, longitude: 12.5450 },
+  'Vesterbro': { latitude: 55.6670, longitude: 12.5480 },
+  'Østerbro': { latitude: 55.7080, longitude: 12.5770 },
+  'Frederiksberg': { latitude: 55.6790, longitude: 12.5320 },
+  'Amager': { latitude: 55.6550, longitude: 12.6000 },
+  'Indre By': { latitude: 55.6800, longitude: 12.5800 },
+  'Valby': { latitude: 55.6620, longitude: 12.5160 },
+};
+
 // Onboarding-spørgsmål. Vises i OnboardingScreen med .map(), så et nyt spørgsmål kun skal tilføjes her.
 // type: 'valg' = vælg én, 'flervalg' = vælg flere, 'skala' = 1-5, 'tekst' = fritekst, 'slider' = træk mellem min og max
 // slider: default er startværdien, unit vises efter tallet, maxLabel vises i stedet for tallet ved max (fx '24+ mdr.')
