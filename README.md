@@ -29,17 +29,18 @@ npm install
 - BioScreen: ? 
 
 ## Funktionaliteter
-- Login og database: oprettelse, login og profiler gemt i Firebase 
-- Kamera: tag eller vælg profilbillede 
-- Kort: viser bydelen, værelset ligger i 
-- AI-profilhjælper: AI skriver din bio 
-- Profil-menu: rediger profil, svar og bio 
-- Menu i bunden: Find roomie, Matches og Profil 
+- Login og database: oprettelse, login og profiler gemt i RealTime database i Firebase: Emil
+- Kamera: tag eller vælg billede fra galleri til profilbillede: Emil
+- Kort: viser bydelen, værelset ligger i: Nikola
+- AI-profilhjælper: AI skriver din bio: Meda
+- Profil-menu: rediger profil, svar og bio: Meda
+- Menu i bunden: Find roomie, Matches og Profil: Meda 
 
 
 ## Demo 
-- For at se videoen skal du trykke på "View raw" og derefter downloade videoen.
-https://github.com/NorkuteMeda/Roomie-Swipe/blob/main/1f6b096b-83c6-475d-8bfa-65786794d449.mp4
+- For at se videoen skal du trykke på "View raw" og derefter downloade videoen. 
+(Der er åbenbart ikke lyd på videoen, når den er uploadet gennem Github. Hvis man vil have lyde på skal man derfor downloade versionen uploaded med afleveringen til canvas.)
+https://github.com/NorkuteMeda/Roomie-Swipe/blob/main/RoomieSwipe%20app%20gennemgang.mp4
 
 
 
