@@ -37,10 +37,14 @@ npm install
 - Menu i bunden: Find roomie, Matches og Profil: Meda 
 
 
-## Demo 
+## Demovideo
 - For at se videoen skal du trykke på "View raw" og derefter downloade videoen. 
 (Der er åbenbart ikke lyd på videoen, når den er uploadet gennem Github. Hvis man vil have lyde på skal man derfor downloade versionen uploaded med afleveringen til canvas.)
 https://github.com/NorkuteMeda/Roomie-Swipe/blob/main/RoomieSwipe%20app%20gennemgang.mp4
+
+- Hvis man ikke kan få lyden til at virke på den ovenstående video, så har vi også lavet en uden lyd, som bare er en ren gennemgang af appen, uden forklaring og beskrivelse undervejs: 
+https://github.com/NorkuteMeda/Roomie-Swipe/blob/main/App%20gennemgang%20uden%20lyd.mp4
+
 
 
 
