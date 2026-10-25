@@ -25,11 +25,11 @@ npm install
 - MapScreen: Nikola 
 - OnboardingScreen Ny: Meda 
 - AiBioScreen: Meda 
-- ProfileMenuScreen: ?
-- BioScreen: ? 
+- ProfileMenuScreen: Meda
+- BioScreen: Mads
 
 ## Funktionaliteter
-- Login og database: oprettelse, login og profiler gemt i RealTime database i Firebase: Emil
+- Login og database: oprettelse, login og profiler gemt i RealTime database i Firebase: Mads
 - Kamera: tag eller vælg billede fra galleri til profilbillede: Emil
 - Kort: viser bydelen, værelset ligger i: Nikola
 - AI-profilhjælper: AI skriver din bio: Meda

@@ -15,7 +15,7 @@ export default function BioScreen({ navigation }) {
   const [bio, setBio] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Lytter på bioen i Firebase (mønster fra 05_firebase).
+  // Lytter på bioen i Firebase 
   // Når AI-skærmen gemmer en ny bio, kommer den automatisk ind i tekstfeltet her.
   useEffect(() => {
     const unsubscribe = onValue(ref(rtdb, 'users/' + auth.currentUser.uid + '/bio'), (snap) => {

@@ -9,7 +9,7 @@ import { ONBOARDING_QUESTIONS } from '../data/const';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { auth, rtdb } from '../database/firebase';
 
-// AI'ens regler. Systembeskeden ses ikke af brugeren, men styrer hvordan AI'en svarer (som i 10_AI_code).
+// AI'ens regler. Systembeskeden ses ikke af brugeren, men styrer hvordan AI'en svarer
 const SYSTEM_PROMPT = `Du er profilhjælper i RoomieMatch, en app hvor unge finder en roomie. Det er ikke en dating-app.
 Skriv en kort bio til brugerens profil ud fra brugerens svar.
 Regler:
@@ -107,7 +107,7 @@ export default function AiBioScreen({ navigation, route }) {
   // Den nyeste AI-besked er den seneste version af bioen
   const latestBio = [...messages].reverse().find((m) => m.role === 'assistant')?.content;
 
-  // Gemmer bioen med update, så resten af profilen bliver liggende (mønster fra 05_firebase)
+  // Gemmer bioen med update, så resten af profilen bliver liggende 
   const saveBio = async () => {
     if (!latestBio || loading) return;
     try {

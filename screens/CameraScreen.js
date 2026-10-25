@@ -5,6 +5,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { GlobalStyle } from '../styles/GlobalStyle';
 
+// Dette er filen der gør det muligt at tage billeder med brugerens eget mobil kamera
+// Først tjekker den om appen har tilladelse/adgang til kameret, og hvis ikke, så giver den brugeren mulighed for at gøre det via en knap
+// Brugeren bliver herefter vist en skærm, lig den man tilgår når man vil tage et normalt billede med sin mobil
+// Man har mulighed for at skifte mellem for- og bagkamera samt at flippe billedet.
 export default function CameraScreen({ navigation }) {
   const [facing, setFacing] = useState('front');
   const [permission, requestPermission] = useCameraPermissions();
